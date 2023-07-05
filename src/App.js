@@ -2,9 +2,6 @@ import React from "react";
 import Button from "./Button";
 import { useState } from "react";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBackspace } from "@fortawesome/free-solid-svg-icons";
-// i want the numbers have a different color than the operators
 const btnValues = [
   {
     char: "C",
@@ -115,7 +112,14 @@ function App() {
   const [calculations, setCalculations] = useState("");
   const [result, setResult] = useState("");
 
+  function handleCalculationsChange(event) {
+    setCalculations(event.target.value);
+  }
+
   function handleButtonClick(char) {
+    // if(calculations.length > 17){
+    //   document.getElementById("calculations").style.overflow = "scroll";
+    // }
     if (char === "C") {
       // Clear all calculations and result
       setCalculations("");
@@ -126,6 +130,7 @@ function App() {
     } else if (char === "=") {
       // Evaluate the calculations and update the result
       try {
+        // eslint-disable-next-line no-eval
         const evalResult = eval(calculations);
         setResult(evalResult.toString());
       } catch (error) {
@@ -134,34 +139,32 @@ function App() {
     } else if (char === "+/-") {
       // Evaluate the calculations and update the result
       setCalculations(calculations * -1);
-      setResult(calculations);
     } else {
       // Append the clicked button char to the calculations
       char === "x"
         ? setCalculations(calculations + "*")
         : setCalculations(calculations + char);
     }
+
+    
   }
-  
 
   return (
     <div className="flex justify-center items-center h-screen w-screen background">
-      <div className="flex flex-col justify-between shadow-2xl rounded-lg h-4/5 p-2">
-        <div className="flex flex-col justify-around p-4 h-full shadow-lg my-2 rounded-lg">
-          <div className="flex justify-end">
-            <div className="text-2xl text-black" id="calculations">
-              {calculations}
-            </div>
+      <div className="flex flex-col justify-between border border-violet-200 shadow-2xl shadow-sky-700 rounded-lg h-4/5 p-4">
+        <div className="flex flex-col justify-between p-4 h-full  border-2 shadow-2xl my-2 rounded-lg">
+        <input
+            className="w-56 text-2xl text-black  bg-transparent outline-none border-b border-cyan-900"
+            type="text"
+            value={calculations}
+            onChange={handleCalculationsChange}
+          />
+
+          <div className="flex justify-end text-xl text-black" id="result">
+            {result}
           </div>
-          <div className="flex justify-end">
-            <div className="text-4xl text-black" id="result">
-              {result}
-            </div>
-          </div>
+
           {/* backspace icon */}
-          <button className="text-cyan-900 font-bold flex justify-end ">
-            <FontAwesomeIcon icon={faBackspace} className="mr-1 mt-4" />
-          </button>
         </div>
         <div className="grid grid-cols-4 ">
           {btnValues.map((btn) => (
