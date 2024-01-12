@@ -2,7 +2,9 @@
 <!-- make readme of this calculator project  -->
 
 # Calculator 
-live demo: 
+<!-- make live demo https://calculator-rawaz.netlify.app/-->
+live demo:  https://calculator-rawaz.netlify.app/
+
 
 ## Description
 
